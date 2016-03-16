@@ -7,6 +7,41 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Wybierz linię:" Grid.Row="0"></Label>
+        <ComboBox Grid.Row="1" HorizontalAlignment="Left">
+            <ComboBoxItem>Linia Nr 1</ComboBoxItem>
+            <ComboBoxItem>Linia Nr 2</ComboBoxItem>
+            <ComboBoxItem>Linia Nr 3</ComboBoxItem>
+            <ComboBoxItem>Linia Nr 4</ComboBoxItem>
+            <ComboBoxItem>Linia Nr 5</ComboBoxItem>
+        </ComboBox>
+        <Label Content="Wybierz linię:" Grid.Row="2"></Label>
+        <ComboBox  Grid.Row="3">
+            <ComboBoxItem>Linia Nr 1</ComboBoxItem>
+            <ComboBoxItem>Linia Nr 2</ComboBoxItem>
+            <ComboBoxItem>Linia Nr 3</ComboBoxItem>
+            <ComboBoxItem>Linia Nr 4</ComboBoxItem>
+            <ComboBoxItem>Linia Nr 5</ComboBoxItem>
+        </ComboBox>
+        <Label Content="Wybierz linię:" Grid.Row="4"></Label>
+        <ComboBox  Grid.Row="5">
+            <ComboBoxItem>Linia Nr 1</ComboBoxItem>
+            <ComboBoxItem>Linia Nr 2</ComboBoxItem>
+            <ComboBoxItem>Linia Nr 3</ComboBoxItem>
+            <ComboBoxItem>Linia Nr 4</ComboBoxItem>
+            <ComboBoxItem>Linia Nr 5</ComboBoxItem>
+        </ComboBox>
+        <StackPanel Grid.Row="6" VerticalAlignment="Bottom">
+            <Button HorizontalAlignment="Right" Margin="10" VerticalAlignment="Bottom"> Dalej </Button>
+        </StackPanel>
     </Grid>
 </Window>

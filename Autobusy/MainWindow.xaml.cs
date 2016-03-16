@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,7 +25,14 @@ namespace Autobusy
     {
         public MainWindow()
         {
-            InitializeComponent();
+            WebClient client = new WebClient();
+            string html = client.DownloadString("http://www.komunikacja.bialystok.pl/?page=rozklad_jazdy");
+
+
+            foreach ()
+            {
+                LiniaComboBox.Items.Add();
+            }
         }
     }
 }
