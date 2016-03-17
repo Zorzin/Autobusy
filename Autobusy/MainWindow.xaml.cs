@@ -25,6 +25,7 @@ namespace Autobusy
     {
 
         private List<String> listaprzystankow;
+        private string htmlkierunek;
         public struct LinkItem
         {
             public string Href;
@@ -112,6 +113,7 @@ namespace Autobusy
         {
             InitializeComponent();
             WebClient client = new WebClient();
+            client.Encoding = Encoding.UTF8;
             string html = client.DownloadString("http://www.komunikacja.bialystok.pl/?page=rozklad_jazdy");
 
             string linie = html.Substring(html.IndexOf("<!-- START box: tabela_linii -->"),
@@ -135,7 +137,8 @@ namespace Autobusy
             KierunkiComboBox.Items.Clear();
             var kierunek = LiniaComboBox.SelectedItem;
             WebClient webClient = new WebClient();
-            string htmlkierunek = webClient.DownloadString("http://www.komunikacja.bialystok.pl/?page=lista_przystankow&nr="+kierunek.ToString()+"&rozklad=");
+            webClient.Encoding = Encoding.UTF8;
+            htmlkierunek = webClient.DownloadString("http://www.komunikacja.bialystok.pl/?page=lista_przystankow&nr="+kierunek.ToString()+"&rozklad=");
             htmlkierunek = htmlkierunek.Substring(htmlkierunek.IndexOf("<div id=\"lista_przystankow\">"),htmlkierunek.LastIndexOf("</div><!--lista_przystankow-->")- htmlkierunek.IndexOf("<div id=\"lista_przystankow\">"));
             List<LinkItem> kierunki = new List<LinkItem>();
             kierunki = Findkierunek(htmlkierunek);
@@ -151,6 +154,31 @@ namespace Autobusy
                 if (test1)
                 {
                     KierunkiComboBox.Items.Add(x);
+                }
+            }
+        }
+
+        private void KierunkiComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PrzystanekComboBox.Items.Clear();
+            var linia = KierunkiComboBox.SelectedItem;
+            bool poczatek=false;
+            foreach (var x in listaprzystankow)
+            {
+                if (!poczatek)
+                {
+                    poczatek = x.Equals(linia);
+                }
+                else
+                {
+                    if (x.Substring(2,8)!="kierunek")
+                    {
+                        PrzystanekComboBox.Items.Add(x);
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
             }
         }

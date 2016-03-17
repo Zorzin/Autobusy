@@ -21,11 +21,11 @@
            
         </ComboBox>
         <Label Content="Wybierz kierunek:" Grid.Row="2"></Label>
-        <ComboBox Name="KierunkiComboBox" Grid.Row="3">
+        <ComboBox Name="KierunkiComboBox" Grid.Row="3" SelectionChanged="KierunkiComboBox_SelectionChanged">
             
         </ComboBox>
         <Label Content="Wybierz przystanek:" Grid.Row="4"></Label>
-        <ComboBox  Grid.Row="5">
+        <ComboBox  Name="PrzystanekComboBox" Grid.Row="5">
             
         </ComboBox>
         <StackPanel Grid.Row="6" VerticalAlignment="Bottom">
