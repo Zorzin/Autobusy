@@ -17,11 +17,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Content="Wybierz linię:" Grid.Row="0"></Label>
-        <ComboBox Name="LiniaComboBox" Grid.Row="1">
+        <ComboBox Name="LiniaComboBox" Grid.Row="1" SelectionChanged="LiniaComboBox_SelectionChanged">
            
         </ComboBox>
         <Label Content="Wybierz kierunek:" Grid.Row="2"></Label>
-        <ComboBox  Grid.Row="3">
+        <ComboBox Name="KierunkiComboBox" Grid.Row="3">
             
         </ComboBox>
         <Label Content="Wybierz przystanek:" Grid.Row="4"></Label>

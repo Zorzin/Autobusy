@@ -23,6 +23,8 @@ namespace Autobusy
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private List<String> listaprzystankow;
         public struct LinkItem
         {
             public string Href;
@@ -34,7 +36,7 @@ namespace Autobusy
             }
         }
 
-            public static List<LinkItem> Find(string file)
+            public static List<LinkItem> Findlink(string file)
             {
                 List<LinkItem> list = new List<LinkItem>();
 
@@ -68,7 +70,43 @@ namespace Autobusy
                     list.Add(i);
                 }
                 return list;
-            }       
+            }
+
+        public static List<LinkItem> Findkierunek(string file)
+        {
+            List<LinkItem> list = new List<LinkItem>();
+
+            // 1.
+            // Find all matches in file.
+            MatchCollection m1 = Regex.Matches(file, @"(<td.*?>.*?</td>)",
+                RegexOptions.Singleline);
+
+            // 2.
+            // Loop over each match.
+            foreach (Match m in m1)
+            {
+                string value = m.Groups[1].Value;
+                LinkItem i = new LinkItem();
+
+                // 3.
+                // Get href attribute.
+                Match m2 = Regex.Match(value, @"kierunek:\""(.*?)\""",
+                RegexOptions.Singleline);
+                if (m2.Success)
+                {
+                    i.Href = m2.Groups[1].Value;
+                }
+
+                // 4.
+                // Remove inner tags from text.
+                string t = Regex.Replace(value, @"\s*<.*?>\s*", "",
+                RegexOptions.Singleline);
+                i.Text = t;
+
+                list.Add(i);
+            }
+            return list;
+        }
 
         public MainWindow()
         {
@@ -80,7 +118,7 @@ namespace Autobusy
                 html.LastIndexOf("<!-- END box: tabela_linii -->")- html.IndexOf("<!-- START box: tabela_linii -->"));
 
             List<LinkItem> numbers = new List<LinkItem>();
-            numbers = Find(linie);
+            numbers = Findlink(linie);
             List<string> lista = new List<string>();
             foreach (var x in numbers)
             {
@@ -90,17 +128,31 @@ namespace Autobusy
             {
                 LiniaComboBox.Items.Add(x);
             }
-            
-            Console.WriteLine(linie);
         }
 
         private void LiniaComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            ComboBoxItem kierunek = (ComboBoxItem)LiniaComboBox.SelectedItem;
+            KierunkiComboBox.Items.Clear();
+            var kierunek = LiniaComboBox.SelectedItem;
             WebClient webClient = new WebClient();
-            string htmlkierunek = webClient.DownloadString("http://www.komunikacja.bialystok.pl/?page=lista_przystankow&nr="+kierunek.Content.ToString()+"&rozklad=");
-
+            string htmlkierunek = webClient.DownloadString("http://www.komunikacja.bialystok.pl/?page=lista_przystankow&nr="+kierunek.ToString()+"&rozklad=");
+            htmlkierunek = htmlkierunek.Substring(htmlkierunek.IndexOf("<div id=\"lista_przystankow\">"),htmlkierunek.LastIndexOf("</div><!--lista_przystankow-->")- htmlkierunek.IndexOf("<div id=\"lista_przystankow\">"));
+            List<LinkItem> kierunki = new List<LinkItem>();
+            kierunki = Findkierunek(htmlkierunek);
+            listaprzystankow = null;
+            listaprzystankow = new List<string>();
+            foreach (var x in kierunki)
+            {
+                listaprzystankow.Add(x.ToString());
+            }
+            foreach (var x in listaprzystankow)
+            {
+                bool test1 = x.Substring(2, 8).Equals("kierunek");
+                if (test1)
+                {
+                    KierunkiComboBox.Items.Add(x);
+                }
+            }
         }
     }
 }
