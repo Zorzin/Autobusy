@@ -93,5 +93,14 @@ namespace Autobusy
             
             Console.WriteLine(linie);
         }
+
+        private void LiniaComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            ComboBoxItem kierunek = (ComboBoxItem)LiniaComboBox.SelectedItem;
+            WebClient webClient = new WebClient();
+            string htmlkierunek = webClient.DownloadString("http://www.komunikacja.bialystok.pl/?page=lista_przystankow&nr="+kierunek.Content.ToString()+"&rozklad=");
+
+        }
     }
 }
