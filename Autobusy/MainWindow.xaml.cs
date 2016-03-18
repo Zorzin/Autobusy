@@ -24,7 +24,8 @@ namespace Autobusy
     public partial class MainWindow : Window
     {
 
-        private List<String> listaprzystankow;
+        private List<string> listaprzystankow;
+        private List<string> nrprzystanku; 
         private string htmlkierunek;
         public struct LinkItem
         {
@@ -163,23 +164,56 @@ namespace Autobusy
             PrzystanekComboBox.Items.Clear();
             var linia = KierunkiComboBox.SelectedItem;
             bool poczatek=false;
+            bool poczatek2 = false;
+            int i = -1;
+            List<LinkItem> numery = new List<LinkItem>();
+            List<string> nrList = new List<string>();
+            numery = Findlink(htmlkierunek);
+            foreach (var x in numery)
+            {
+               nrList.Add(x.ToString().Substring(x.ToString().IndexOf("nrp=")+4, x.ToString().IndexOf("k=") - x.ToString().IndexOf("nrp=") - 9));
+            }
             foreach (var x in listaprzystankow)
             {
                 if (!poczatek)
                 {
+                    
                     poczatek = x.Equals(linia);
                 }
                 else
                 {
                     if (x.Substring(2,8)!="kierunek")
                     {
-                        PrzystanekComboBox.Items.Add(x);
+                        ComboBoxItem item = new ComboBoxItem();
+                        item.Content=x;
+                        item.Tag = nrList[i];
+                        PrzystanekComboBox.Items.Add(item);
                     }
                     else
                     {
                         return;
                     }
                 }
+                i++;
+                if (!poczatek2 && !poczatek && i > 0)
+                {
+                    i--;
+                    poczatek2 = true;
+                }
+            }
+        }
+
+        private void DalejButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LiniaComboBox.SelectedItem == null || KierunkiComboBox.SelectedItem == null ||
+                PrzystanekComboBox.SelectedItem == null)
+            {
+                InfoLabel.Content = "Wybierz wszystkie dane!";
+            }
+            else
+            {
+                ComboBoxItem item = (ComboBoxItem)PrzystanekComboBox.Items[5];
+                InfoLabel.Content = item.Tag;
             }
         }
     }

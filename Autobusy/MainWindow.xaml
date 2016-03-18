@@ -16,20 +16,49 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Content="Wybierz linię:" Grid.Row="0"></Label>
-        <ComboBox Name="LiniaComboBox" Grid.Row="1" SelectionChanged="LiniaComboBox_SelectionChanged">
-           
+        <Label 
+            Content="Wybierz linię:" 
+            Grid.Row="0"></Label>
+        <ComboBox 
+            Name="LiniaComboBox" 
+            Grid.Row="1" 
+            SelectionChanged="LiniaComboBox_SelectionChanged">
         </ComboBox>
-        <Label Content="Wybierz kierunek:" Grid.Row="2"></Label>
-        <ComboBox Name="KierunkiComboBox" Grid.Row="3" SelectionChanged="KierunkiComboBox_SelectionChanged">
+        <Label 
+            Content="Wybierz kierunek:" 
+            Grid.Row="2"></Label>
+        <ComboBox 
+            Name="KierunkiComboBox" 
+            Grid.Row="3" 
+            SelectionChanged="KierunkiComboBox_SelectionChanged">
             
         </ComboBox>
-        <Label Content="Wybierz przystanek:" Grid.Row="4"></Label>
-        <ComboBox  Name="PrzystanekComboBox" Grid.Row="5">
+        <Label 
+            Content="Wybierz przystanek:" 
+            Grid.Row="4"></Label>
+        <ComboBox  
+            Name="PrzystanekComboBox" 
+            Grid.Row="5">
             
         </ComboBox>
-        <StackPanel Grid.Row="6" VerticalAlignment="Bottom">
-            <Button HorizontalAlignment="Right" Margin="10" VerticalAlignment="Bottom"> Dalej </Button>
+        <StackPanel 
+            Grid.Row="6" 
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Label 
+                Margin="5"
+                Foreground="Red"
+                FontWeight="Bold"
+                Name="InfoLabel"
+                />
+            <Button 
+                Padding="10"
+                Name="DalejButton" 
+                HorizontalAlignment="Right" 
+                Margin="5" 
+                Click="DalejButton_Click"> Dalej </Button>
+            
         </StackPanel>
     </Grid>
 </Window>
