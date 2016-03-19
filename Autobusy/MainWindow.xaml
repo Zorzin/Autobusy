@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Autobusy"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="370.309" Width="548.356" MinHeight="370">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="399*"/>
+            <ColumnDefinition Width="118*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -18,34 +22,34 @@
         </Grid.RowDefinitions>
         <Label 
             Content="Wybierz linię:" 
-            Grid.Row="0"></Label>
+            Grid.Row="0" Grid.ColumnSpan="2"></Label>
         <ComboBox 
             Name="LiniaComboBox" 
             Grid.Row="1" 
-            SelectionChanged="LiniaComboBox_SelectionChanged">
+            SelectionChanged="LiniaComboBox_SelectionChanged" Grid.ColumnSpan="2">
         </ComboBox>
         <Label 
             Content="Wybierz kierunek:" 
-            Grid.Row="2"></Label>
+            Grid.Row="2" Grid.ColumnSpan="2"></Label>
         <ComboBox 
             Name="KierunkiComboBox" 
             Grid.Row="3" 
-            SelectionChanged="KierunkiComboBox_SelectionChanged">
-            
+            SelectionChanged="KierunkiComboBox_SelectionChanged" Grid.ColumnSpan="2">
+
         </ComboBox>
         <Label 
             Content="Wybierz przystanek:" 
-            Grid.Row="4"></Label>
+            Grid.Row="4" Grid.ColumnSpan="2"></Label>
         <ComboBox  
             Name="PrzystanekComboBox" 
-            Grid.Row="5">
-            
+            Grid.Row="5" Grid.ColumnSpan="2">
+
         </ComboBox>
         <StackPanel 
             Grid.Row="6" 
             VerticalAlignment="Bottom"
             HorizontalAlignment="Right"
-            Orientation="Horizontal">
+            Orientation="Horizontal" Grid.Column="1">
             <Label 
                 Margin="5"
                 Foreground="Red"
@@ -57,8 +61,8 @@
                 Name="DalejButton" 
                 HorizontalAlignment="Right" 
                 Margin="5" 
-                Click="DalejButton_Click"> Dalej </Button>
-            
+                Click="DalejButton_Click">Dalej</Button>
+
         </StackPanel>
     </Grid>
 </Window>
