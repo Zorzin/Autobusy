@@ -98,7 +98,7 @@ namespace Autobusy
 
             // 1.
             // Find all matches in file.
-            MatchCollection m1 = Regex.Matches(file, @"(<tbody.*?>.*?</tbody>)",
+            MatchCollection m1 = Regex.Matches(file, @"(<span class=\""godzina\"">.*?</span>)",
                 RegexOptions.Singleline);
 
             // 2.
@@ -110,12 +110,12 @@ namespace Autobusy
 
                 // 3.
                 // Get class attribute.
-                //Match m2 = Regex.Match(value, @"\""(.*?)\""",
-                //RegexOptions.Singleline);
-                //if (m2.Success)
-                //{
-               //     i.Href = m2.Groups[1].Value;
-               // }
+                Match m2 = Regex.Match(value, @"\""(.*?)\""",
+                RegexOptions.Singleline);
+                if (m2.Success)
+                {
+                    i.Href = m2.Groups[1].Value;
+                }
 
                 // 4.
                 // Remove inner tags from text.
