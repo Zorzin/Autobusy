@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -87,10 +88,16 @@ namespace Autobusy
             var client = new WebClient();
             client.Encoding = Encoding.UTF8;
             var strona = client.DownloadString(html);
+            var lista3 = Funkcje.Findlegenda(strona);
+            lista3 = lista3.Substring(0, lista3.IndexOf("autobus niskopodłogowy"));
+            lista3 = lista3.Substring(0, lista3.Length-4);
+            //lista3 = Regex.Replace(lista3, @"\t|\n|\r", "");
+            InfoLabel.Content = lista3;
             strona = strona.Substring(strona.IndexOf("id=\"rozklad_1\""),
                 strona.LastIndexOf("</table>") - strona.IndexOf("id=\"rozklad_1\""));
             var lista = new List<Funkcje.LinkItem>();
             var lista2 = new List<Funkcje.LinkItem>();
+            
             var dzien = new string[3];
             lista = Funkcje.Findkierunek(strona);
             lista2 = Funkcje.Findtbody(strona);
