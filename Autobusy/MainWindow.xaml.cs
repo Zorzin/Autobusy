@@ -64,15 +64,19 @@ namespace Autobusy
             kierunki = Funkcje.Findkierunek(htmlkierunek);
             listaprzystankow = null;
             listaprzystankow = new List<string>();
+            string pomoc;
             foreach (var x in kierunki)
             {
-                listaprzystankow.Add(x.ToString());
+                pomoc = Regex.Replace(x.ToString(), @"\t|\n|\r", "");
+                listaprzystankow.Add(pomoc);
             }
+            
             foreach (var x in listaprzystankow)
             {
-                bool test1 = x.Substring(2, 8).Equals("kierunek");
+                bool test1 = x.Substring(0, 8).Equals("kierunek");
                 if (test1)
                 {
+                    
                     KierunkiComboBox.Items.Add(x);
                 }
             }
@@ -82,7 +86,7 @@ namespace Autobusy
         {
             PrzystanekComboBox.Items.Clear();
             var linia = KierunkiComboBox.SelectedItem;
-            bool poczatek=false;
+            bool poczatek = false;
             bool poczatek2 = false;
             int i = -1;
             List<Funkcje.LinkItem> numery = new List<Funkcje.LinkItem>();
@@ -90,21 +94,22 @@ namespace Autobusy
             numery = Funkcje.Findlink(htmlkierunek);
             foreach (var x in numery)
             {
-               nrList.Add(x.ToString().Substring(x.ToString().IndexOf("nrp=")+4, x.ToString().IndexOf("k=") - x.ToString().IndexOf("nrp=") - 9));
+                nrList.Add(x.ToString().Substring(x.ToString().IndexOf("nrp=") + 4, x.ToString().IndexOf("k=") - x.ToString().IndexOf("nrp=") - 9));
             }
+
             foreach (var x in listaprzystankow)
             {
                 if (!poczatek)
                 {
-                    
+
                     poczatek = x.Equals(linia);
                 }
                 else
                 {
-                    if (x.Substring(2,8)!="kierunek")
+                    if (x.Substring(0, 8) != "kierunek")
                     {
                         ComboBoxItem item = new ComboBoxItem();
-                        item.Content=x;
+                        item.Content = x;
                         item.Tag = nrList[i];
                         PrzystanekComboBox.Items.Add(item);
                     }
@@ -134,6 +139,12 @@ namespace Autobusy
                 ComboBoxItem nrp = (ComboBoxItem)PrzystanekComboBox.SelectedItem;
                 string htmllink = "http://www.komunikacja.bialystok.pl/?page=przystanek&nrl="+LiniaComboBox.SelectedValue+"&nrp="+nrp.Tag+"&k=0&rozklad=";
                 Rozklad rozklad = new Rozklad(htmllink);
+                string nazwa = Regex.Replace(nrp.Content.ToString(), @"\t|\n|\r", "");
+                string linia = Regex.Replace(LiniaComboBox.SelectedValue.ToString(), @"\t|\n|\r", "");
+                string kierunek = Regex.Replace(KierunkiComboBox.SelectedValue.ToString(), @"\t|\n|\r", "");
+                rozklad.MainLabel.Content ="Rozklad przystanku nr: " + nrp.Tag + ", " + nrp.Content + " dla linii nr: " + LiniaComboBox.SelectedValue + ", " + KierunkiComboBox.SelectedValue;
+                rozklad.MainLabel.Content = "Linia nr:" + linia + Environment.NewLine + "Przystanek nr: " + nrp.Tag +
+                                            ", " + nazwa + Environment.NewLine + kierunek;
                 rozklad.Show();
                 this.Close();
             }

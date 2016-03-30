@@ -23,34 +23,45 @@ namespace Autobusy
 
         private void Dodaj(Grid grid, string text, int row)
         {
-            RowDefinition gridRow = new RowDefinition();
+            var gridRow = new RowDefinition();
+            gridRow.Height= GridLength.Auto;
             grid.RowDefinitions.Add(gridRow);
-            Label label = new Label();
-            label.Content = text;
-            label.Foreground = new SolidColorBrush(Colors.Black);
-            label.FontSize = 15;
+            var label = new Label
+            {
+                Content = text,
+                Foreground = new SolidColorBrush(Colors.Black),
+                FontSize = 15
+            };
             Grid.SetColumn(label, 0);
             Grid.SetRow(label, row);
             grid.Children.Add(label);
+            var border = new Border
+            {
+                BorderBrush = Brushes.Black,
+                BorderThickness = new Thickness(0, 0, 0, 1)
+            };
+            Grid.SetRow(border,row);
+            Grid.SetColumnSpan(border,2);
+            grid.Children.Add(border);
         }
 
 
         private void Rozdziel(Funkcje.LinkItem item, Grid grid, int row,int dlugosc)
         {
             int minuty;
-            string tekst = item.Text.Substring(dlugosc,item.Text.Length-dlugosc);
-            Label label = new Label();
+            var tekst = item.Text.Substring(dlugosc,item.Text.Length-dlugosc);
+            var label = new Label();
             Grid.SetColumn(label, 1);
             Grid.SetRow(label, row);
             label.Foreground = new SolidColorBrush(Colors.Black);
             label.FontSize = 15;
             grid.Children.Add(label);
-            for (int i = 0; i < tekst.Length; i++)
+            for (var i = 0; i < tekst.Length; i++)
             {
                 
                 if (i + 3 <= tekst.Length)
                 {
-                    bool test = Int32.TryParse(tekst.Substring(i,3), out minuty);
+                    var test = Int32.TryParse(tekst.Substring(i,3), out minuty);
                     if (test)
                     {
                         label.Content = label.Content + tekst.Substring(i,2) + " ";
@@ -73,29 +84,30 @@ namespace Autobusy
         public Rozklad(string html)
         {
             InitializeComponent();
-            WebClient client = new WebClient();
+            var client = new WebClient();
             client.Encoding = Encoding.UTF8;
-            string strona = client.DownloadString(html);
+            var strona = client.DownloadString(html);
             strona = strona.Substring(strona.IndexOf("id=\"rozklad_1\""),
                 strona.LastIndexOf("</table>") - strona.IndexOf("id=\"rozklad_1\""));
-            List<Funkcje.LinkItem> lista = new List<Funkcje.LinkItem>();
-            List<Funkcje.LinkItem> lista2 = new List<Funkcje.LinkItem>();
+            var lista = new List<Funkcje.LinkItem>();
+            var lista2 = new List<Funkcje.LinkItem>();
+            var dzien = new string[3];
             lista = Funkcje.Findkierunek(strona);
             lista2 = Funkcje.Findtbody(strona);
-            int i = 0;
-            int j = 1;
-            int licznikgrid = 0;
-            int row = 0;
-            int aktualny, nastepny;
-            bool nast;
-            Grid grid = PierwszyGrid;
+            dzien[0] = lista[0].Text;
+            var i = 0;
+            var j = 1;
+            var licznikgrid = 0;
+            var row = 0;
+            var grid = PierwszyGrid;
             foreach (var godzina in lista2)
             {
-
+                int aktualny;
                 if (i < lista2.Count - 1)
                 {
                     Int32.TryParse(lista2[i].Text, out aktualny);
-                    nast = Int32.TryParse(lista2[i + 1].Text, out nastepny);
+                    int nastepny;
+                    var nast = Int32.TryParse(lista2[i + 1].Text, out nastepny);
                     if (nast)
                     {
                         if (aktualny < nastepny)
@@ -118,10 +130,12 @@ namespace Autobusy
                             if (licznikgrid == 1)
                             {
                                 grid = DrugiGrid;
+                                dzien[1] = lista[j-1].Text;
                             }
                             else
                             {
                                 grid = TrzeciGrid;
+                                dzien[2] = lista[j - 1].Text;
                             }
                         }
                     }
@@ -145,7 +159,7 @@ namespace Autobusy
                 }
                 else
                 {
-                    bool akt = Int32.TryParse(lista2[i].Text, out aktualny);
+                    var akt = Int32.TryParse(lista2[i].Text, out aktualny);
                     if (akt)
                     {
                         Dodaj(grid, godzina.Text, row);
@@ -159,6 +173,17 @@ namespace Autobusy
                     }
                 }
             }
+
+            PierwszyLabel.Content = dzien[0];
+            DrugiLabel.Content = dzien[1];
+            TrzeciLabel.Content = dzien[2];
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = new MainWindow();
+            main.Show();
+            this.Close();
         }
     }
 }

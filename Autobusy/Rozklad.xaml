@@ -7,57 +7,99 @@
         mc:Ignorable="d"
         Title="Rozklad" Height="500" Width="500" >
     <ScrollViewer>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid Name="PierwszyGrid" Column="0" Row="1">
+        <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-        </Grid>
-        <Grid Name="DrugiGrid" Column="1" Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.3*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-        </Grid>
-        <Grid Name="TrzeciGrid" Column="2" Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.3*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-        </Grid>
-        <Label 
-            Name="PierwszyTextBox" 
-            Grid.Row="0"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Name="PierwszyGrid" Column="0" Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.RowSpan="2147483647"
+                    BorderThickness="0,0,1,0"
+                    BorderBrush="Black"
+                    />
+
+            </Grid>
+            <Grid Name="DrugiGrid" Column="1" Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.RowSpan="2147483647"
+                    BorderThickness="0,0,1,1"
+                    BorderBrush="Black"
+                    />
+            </Grid>
+            <Grid Name="TrzeciGrid" Column="2" Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.RowSpan="2147483647"
+                    BorderThickness="0,0,1,1"
+                    BorderBrush="Black"
+                    />
+            </Grid>
+            <Label 
+            Name="PierwszyLabel" 
+            Grid.Row="1"
             FontSize="20"/>
-        <Label 
-            Name="DrugiTextBox" 
-            Grid.Row="0" 
+            <Label 
+            Name="DrugiLabel" 
+            Grid.Row="1" 
             Grid.Column="1"
             FontSize="20"/>
-        <Label 
-            Name="TrzeciTextBox" 
-            Grid.Row="0" 
+            <Label 
+            Name="TrzeciLabel" 
+            Grid.Row="1" 
             Grid.Column="2"
             FontSize="20"/>
-        <Border 
-            Grid.Column="1"
-            Grid.RowSpan="2" 
-            BorderThickness="2,0,2,0" 
+            <Border 
+            Grid.ColumnSpan="3"
+            Grid.Row="1" 
+            BorderThickness="2,0,2,2" 
             BorderBrush="Black"/>
-        <Border
+            <Border
             Grid.ColumnSpan="3"
             BorderThickness="0,0,0,2"
             BorderBrush="Black"/>
-    </Grid>
+            <Border
+            Grid.Column="1"
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            BorderThickness="2,0,2,0"
+            BorderBrush="Black"/>
+            <StackPanel
+                Grid.Row="0"
+                Grid.ColumnSpan="3"
+                Orientation="Horizontal">
+                <Label 
+                    Name="MainLabel"
+                    HorizontalAlignment="Left"
+                    Margin="10,0"/>
+                <Label
+                    Name="InfoLabel"
+                    HorizontalAlignment="Left"
+                    Margin="10,0"/>
+                <Button
+                    Name="BackButton"
+                    HorizontalAlignment="Right"
+                    Padding="10,0"
+                    Margin="10,3" 
+                    Click="BackButton_Click">Powrót</Button>
+            </StackPanel>
+        </Grid>
     </ScrollViewer>
 </Window>
