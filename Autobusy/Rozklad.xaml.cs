@@ -92,6 +92,17 @@ namespace Autobusy
             lista3 = lista3.Substring(0, lista3.IndexOf("autobus niskopodłogowy"));
             lista3 = lista3.Substring(0, lista3.Length-4);
             //lista3 = Regex.Replace(lista3, @"\t|\n|\r", "");
+            char[] nlista3 = lista3.ToCharArray();
+            for (int k = 0; k < nlista3.Length; k++)
+            {
+                if (nlista3[k] == '\n')
+                {
+                    var pom = nlista3[k - 1];
+                    nlista3[k - 1] = nlista3[k];
+                    nlista3[k] = pom;
+                }
+            }
+            lista3 = String.Join("",nlista3);
             InfoLabel.Content = lista3;
             strona = strona.Substring(strona.IndexOf("id=\"rozklad_1\""),
                 strona.LastIndexOf("</table>") - strona.IndexOf("id=\"rozklad_1\""));
