@@ -14,3 +14,5 @@ Stworzona do nauki WPF.
 Aplikacja nie działa, gdy nie ma połączenia z internetem. Aplikacja nie ma obsługi wyjątków.
 Działa tylko wtedy, gdy komunikacja.bialystok.pl jest wciąż w takiej samej strukturze html.
 Aplikacja parsuje kod html i bierze potrzebne dane.
+
+Made in March 2016
